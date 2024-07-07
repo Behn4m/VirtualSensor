@@ -53,7 +53,17 @@ public:
 
     void removeSensor(int sensorId) 
     {
-
+        auto it = sensors.find(sensorId);
+        if (it == sensors.end()) 
+        {
+            cout << "Error: Sensor with ID " << sensorId << " not found." << endl;
+        }
+        else 
+        {
+            delete it->second;
+            sensors.erase(it);
+            cout << "Sensor with ID " << sensorId << " removed successfully." << endl;
+        }
     }
 };
 
@@ -94,7 +104,8 @@ public:
 		}
         else if (action == "remove") 
         {
-
+            int sensorId = stoi(arg);
+            sensorPool.removeSensor(sensorId);
         }
         else
         {
