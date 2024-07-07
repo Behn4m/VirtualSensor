@@ -47,7 +47,8 @@ int Sensor::getNextId()
 // streamer
 void Sensor::streamData() 
 {
-    if (remainingTime > 0) {
+    if (remainingTime > 0) 
+    {
         remainingTime--;
     }
     else 
