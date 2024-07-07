@@ -6,7 +6,7 @@
 // Derived PressureSensor Class
 class PressureSensor : public Sensor {
 public:
-    PressureSensor(int sensorId);
+    PressureSensor();
 
     void displaySensorInfo() const override;
 };
@@ -14,7 +14,7 @@ public:
 // Derived TemperatureSensor Class
 class TemperatureSensor : public Sensor {
 public:
-    TemperatureSensor(int sensorId);
+    TemperatureSensor();
 
     void displaySensorInfo() const override;
 };
@@ -22,7 +22,7 @@ public:
 // Derived ConductivitySensor Class
 class ConductivitySensor : public Sensor {
 public:
-    ConductivitySensor(int sensorId);
+    ConductivitySensor();
 
     void displaySensorInfo() const override;
 };

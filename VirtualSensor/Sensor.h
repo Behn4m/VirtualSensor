@@ -1,3 +1,6 @@
+#ifndef SENSOR_H
+#define SENSOR_H
+
 #include <iostream>
 
 /**
@@ -7,7 +10,8 @@
 class Sensor {
 private:
     std::string type;
-    int id;
+    static int nextId;
+    int id = 0;
     unsigned int samplingInterval;
 
 public:
@@ -23,7 +27,7 @@ public:
      * @param sensorId The ID of the sensor.
      * @param sensorSamplingInterval The sampling interval of the sensor in milliseconds.
      */
-    Sensor(const std::string& sensorType, int sensorId, unsigned int sensorSamplingInterval);
+    Sensor(const std::string& sensorType, unsigned int sensorSamplingInterval);
 
     /**
      * @brief Set the type of the sensor.
@@ -60,11 +64,14 @@ public:
      */
     int getId() const;
 
+
     /**
      * @brief Get the sampling interval of the sensor in milliseconds.
      * 
      * @return The sampling interval of the sensor in milliseconds.
      */
     double getSamplingInterval() const;
-
 };
+
+
+#endif // SENSOR_H

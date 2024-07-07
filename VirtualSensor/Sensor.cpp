@@ -2,8 +2,11 @@
 #include <iostream>
 
 // Constructor
-Sensor::Sensor(const std::string& sensorType, int sensorId, unsigned int sensorSamplingInterval)
-    : type(sensorType), id(sensorId), samplingInterval(sensorSamplingInterval) {}
+Sensor::Sensor(const std::string& sensorType, unsigned int sensorSamplingInterval)
+    : type(sensorType), samplingInterval(sensorSamplingInterval) 
+{
+    	id = nextId++;
+}
 
 void Sensor::setType(const std::string& sensorType) {
     type = sensorType;

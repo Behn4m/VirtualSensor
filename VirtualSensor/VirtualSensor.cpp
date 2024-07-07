@@ -9,9 +9,58 @@
 
 using namespace std;
 
+int Sensor::nextId = 1;     // Initialize the static member variable
+
+class SensorPool {
+private:
+    map<int, Sensor*> sensors;
+
+public:
+    void addSensor(const string& sensorType) 
+    {
+        Sensor* newSensor = nullptr;
+        if (sensorType == "pressure") 
+        {
+            newSensor = new PressureSensor();
+        }
+        else if (sensorType == "temperature") 
+        {
+            newSensor = new TemperatureSensor();
+        }
+        else if (sensorType == "conductivity") 
+        {
+            newSensor = new ConductivitySensor();
+        }
+        else 
+        {
+            cout << "Error: Unknown sensor type. Supported types: pressure, temperature, conductivity." << endl;
+            return;
+        }
+
+        sensors[newSensor->getId()] = newSensor;
+        cout << "Sensor of type '" << sensorType << "' added with ID: " << newSensor->getId() << endl;
+    }
+
+    void listSensors() const 
+    {
+        cout << "Listing all sensors:" << endl;
+        for (const auto& kv : sensors) 
+        {
+            kv.second->displaySensorInfo();
+        }
+        cout << endl;
+    }
+
+    void removeSensor(int sensorId) 
+    {
+
+    }
+};
+
 // Command Processor Class
 class CommandProcessor {
 private:
+    SensorPool sensorPool;
 
 public:
     void processCommand() 
@@ -37,12 +86,12 @@ public:
         // Process command
         if (action == "add") 
         {
-
+            sensorPool.addSensor(arg);
         }
         else if (action == "list") 
         {
-
-        }
+			sensorPool.listSensors();
+		}
         else if (action == "remove") 
         {
 
