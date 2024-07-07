@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <thread>
+#include <chrono>
 #include "SensorTypes.h"
 
 using namespace std;
@@ -65,13 +67,23 @@ public:
             cout << "Sensor with ID " << sensorId << " removed successfully." << endl;
         }
     }
+
+    Sensor* getSensor(int sensorId) 
+	{
+		auto it = sensors.find(sensorId);
+		if (it == sensors.end()) 
+		{
+			return nullptr;
+		}
+		return it->second;
+	}
 };
+SensorPool sensorPool;
 
 // Command Processor Class
 class CommandProcessor {
 private:
-    SensorPool sensorPool;
-
+    
 public:
     void processCommand() 
     {
@@ -115,16 +127,44 @@ public:
 };
 
 
+void sensorStream() 
+{
+    while (true)
+    {
+        int n = Sensor::getNextId() - 1;
+        if ( n > 0)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                Sensor* sensor = sensorPool.getSensor(i + 1);
+                sensor->streamData();
+            }
+        }
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+}
+
+void acceptCommands()
+{
+    CommandProcessor processor;
+    while (true)
+    {
+        processor.processCommand();
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+    }
+}
+
+
 // Main function
 int main() 
 {
-    CommandProcessor processor;
+    std::thread streamThread(sensorStream);
+    std::thread commandThread(acceptCommands);
+    
+    streamThread.join();
+    commandThread.join();
 
-    while (1)
-    {
-        processor.processCommand();
-        cout << endl;
-    }
+    
 
     return 0;
 }

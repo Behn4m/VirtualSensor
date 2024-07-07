@@ -16,7 +16,7 @@
  * @param sensorId The ID of the sensor.
  */
 PressureSensor::PressureSensor()
-    : Sensor("Pressure", 1000U) {}
+    : Sensor("Pressure", 1U) {}
 
 /**
  * @brief Displays information about the pressure sensor.
@@ -35,7 +35,7 @@ void PressureSensor::displaySensorInfo() const {
  * @param sensorId The ID of the sensor.
  */
 TemperatureSensor::TemperatureSensor()
-    : Sensor("Temperature", 8000U) {}
+    : Sensor("Temperature", 8U) {}
 
 /**
  * @brief Displays information about the temperature sensor.
@@ -54,7 +54,7 @@ void TemperatureSensor::displaySensorInfo() const {
  * @param sensorId The ID of the sensor.
  */
 ConductivitySensor::ConductivitySensor()
-    : Sensor("Conductivity", 16000U) {}
+    : Sensor("Conductivity", 16U) {}
 
 /**
  * @brief Displays information about the conductivity sensor.

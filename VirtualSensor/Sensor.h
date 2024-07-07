@@ -10,22 +10,18 @@
 class Sensor {
 private:
     std::string type;
-    static int nextId;
     int id = 0;
     unsigned int samplingInterval;
+    int remainingTime;
+    static int nextId;
 
 public:
-    /**
-     * @brief Display the sensor information.
-     */
-    virtual void displaySensorInfo() const;
-
     /**
      * @brief Constructor for the Sensor class.
      * 
      * @param sensorType The type of the sensor.
      * @param sensorId The ID of the sensor.
-     * @param sensorSamplingInterval The sampling interval of the sensor in milliseconds.
+     * @param sensorSamplingInterval The sampling interval of the sensor in seconds.
      */
     Sensor(const std::string& sensorType, unsigned int sensorSamplingInterval);
 
@@ -44,11 +40,18 @@ public:
     void setId(int sensorId);
 
     /**
-     * @brief Set the sampling interval of the sensor in milliseconds.
+     * @brief Set the sampling interval of the sensor in seconds.
      * 
-     * @param sensorSamplingInterval The sampling interval of the sensor in milliseconds.
+     * @param sensorSamplingInterval The sampling interval of the sensor in seconds.
      */
     void setSamplingInterval(unsigned int sensorSamplingInterval);
+
+    /**
+	 * @brief Get the next available ID for a sensor.
+	 * 
+	 * @return The next available ID for a sensor.
+	 */
+    static int getNextId();
 
     /**
      * @brief Get the type of the sensor.
@@ -64,13 +67,22 @@ public:
      */
     int getId() const;
 
-
     /**
      * @brief Get the sampling interval of the sensor in milliseconds.
      * 
      * @return The sampling interval of the sensor in milliseconds.
      */
     double getSamplingInterval() const;
+
+    /**
+	 * @brief Stream sensor data.
+	 */
+    void streamData();
+
+    /**
+    * @brief Display the sensor information.
+    */
+    virtual void displaySensorInfo() const;
 };
 
 
