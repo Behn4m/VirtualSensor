@@ -12,6 +12,7 @@
 using namespace std;
 
 int Sensor::nextId = 1;     // Initialize the static member variable
+bool waitForCommand = false;
 
 class SensorPool {
 private:
@@ -89,6 +90,7 @@ public:
     {
         string command;
         cout << "Enter command (add <sensortype>, list, remove <sensorid>): ";
+        waitForCommand = true;
         getline(cin, command);
 
         // Parse command
@@ -123,14 +125,18 @@ public:
         {
             cout << "Error: Unknown command. Supported commands: add, list, remove." << endl;
         }
+        waitForCommand = false;
     }
 };
-
 
 void sensorStream() 
 {
     while (true)
     {
+        if (waitForCommand)
+		{
+			continue;
+		}
         int n = Sensor::getNextId() - 1;
         if ( n > 0)
         {
@@ -149,8 +155,13 @@ void acceptCommands()
     CommandProcessor processor;
     while (true)
     {
-        processor.processCommand();
-        std::this_thread::sleep_for(std::chrono::seconds(3));
+        char input;
+        cin >> input;
+        cin.ignore();
+        if (input == 'c')
+        {
+            processor.processCommand();
+        }
     }
 }
 
@@ -163,8 +174,6 @@ int main()
     
     streamThread.join();
     commandThread.join();
-
     
-
     return 0;
 }
